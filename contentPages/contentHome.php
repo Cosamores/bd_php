@@ -2,6 +2,7 @@
     <div class="row p-2 bg-light" id="askOrSearchQuestions">
         <div class="row">
             <h1 class="text-center">Have any questions?</h1>
+            
         </div>
         <div class="row mx-auto">
             <div class="col-12 col-md-5 d-flex flex-column align-items-center justify-content-evenly">
@@ -42,4 +43,5 @@
             <p>Questions can be from different categories and subcategories. </p>        
         </div>
     </div>
+    
 </div>

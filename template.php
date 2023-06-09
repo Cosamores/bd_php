@@ -1,4 +1,11 @@
-<?php session_start(); ?>
+
+  <?php 
+
+     session_start();  
+     $_pageContent = 'template.php';
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -61,7 +68,8 @@
         </div>
       </nav>
       <main class="p-2">
-        <?php include($pageContent); ?>
+
+
       </main>
       <footer class="bg-primary p-2 d-flex flex-column justify-content-end align-items-center">
         <p class="text-light text-center mb-0">Copyright &copy; <span id="currentYear"></span> Digital Aus Solutions Pty Ltd. All rights reserved.</p>
