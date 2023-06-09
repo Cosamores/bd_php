@@ -1,31 +1,57 @@
+<?php
+    session_start();
+    if (isset($_SESSION['password_success_message'])) {
+        echo $_SESSION['password_success_message'];
+        unset($_SESSION['password_success_message']);  // Unset the variable so the message doesn't persist
+    }
+    
+?>
 
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-</head>
-<body>
-    <h2>Register</h2>
-    <form action="register_process.php" method="post">
-        <label for="fname">First Name:</label><br>
-        <input type="text" id="fname" name="fname"><br>
-        <label for="lname">Last Name:</label><br>
-        <input type="text" id="lname" name="lname"><br>
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br>
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br>
-        <label for="cpassword">Confirm Password:</label><br>
-        <input type="password" id="cpassword" name="cpassword"><br>
-        <input type="submit" value="Register">
-    </form>
+    <title>Register</title>
+  </head>
+  <body>
     
-    <button onclick="location.href='template.php'">Go Back</button>
-</body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <div class="card p-5 m-5 rounded"> 
+    <h2 class="p-2 mb-4 bg-dark text-white rounded">Register</h2>
+           <form class="form-group smt-4" action="register_process.php" method="post" enctype="multipart/form-data">
+            <label for="fname" class="form-label">First Name:</label><br>
+            <input type="text" class="form-control" id="fname" name="fname" required><br>
+            <label for="lname" class="form-label">Last Name:</label><br>
+            <input type="text" class="form-control" id="lname" name="lname" required><br>
+            <label for="email" class="form-label">Email:</label><br>
+            <input type="email" class="form-control" id="email" name="email" required><br>
+            <label for="username" class="form-label">Username:</label><br>
+            <input type="text" class="form-control" id="username" name="username" required><br>
+            <label for="password" class="form-label">Password:</label><br>
+            <input type="password" class="form-control" id="password" name="password" required><br>
+            <label for="cpassword" class="form-label">Confirm Password:</label><br>
+            <input type="password" class="form-control" id="cpassword" name="cpassword" required><br>
+            <label for="avatar" class="form-label">Avatar:</label><br>
+            <input type="file" class="form-control" id="avatar" name="avatar"><br>
+            <input type="submit" class="btn btn-primary" value="Register">
+        </form>
+        <button class="btn btn-secondary m-5" onclick="location.href='template.php'">Go Back</button>
+    </div> 
+
+        <style>
+            .btn-container {
+                padding: 20px 0 0 50px;
+            }
+            .form {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            h2 {
+                padding: 20px;
+            }
+        </style>
+    </body>
+</html>

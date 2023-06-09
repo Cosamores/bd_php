@@ -17,10 +17,22 @@ if ($conn->connect_error) {
 }
 
 // Get form data
-$fname = $_POST['fname'] ?? null;
+$fname = $_POST['fname']; 
 $lname = $_POST['lname'] ?? null;
 $email = $_POST['email'] ?? null;
 $avatar = $_FILES['image'] ?? null;
+$username = $_POST['username'] ?? null;
+
+
+// Update username
+if ($username !== null) {
+    $sql = "UPDATE Member SET userName = ? WHERE userName = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $username, $_SESSION['USERNAME']);
+    $stmt->execute();
+    $_SESSION['USERNAME'] = $username;
+}
+
 
 // Update first name
 if ($fname !== null) {
@@ -28,7 +40,7 @@ if ($fname !== null) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $fname, $_SESSION['USERNAME']);
     $stmt->execute();
-    $_SESSION['fname'] = $fname;
+    $_SESSION['FIRSTNAME'] = $fname;
 }
 
 // Update last name
@@ -37,7 +49,7 @@ if ($lname !== null) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $lname, $_SESSION['USERNAME']);
     $stmt->execute();
-    $_SESSION['lname'] = $lname;
+    $_SESSION['LASTNAME'] = $lname;
 }
 
 // Update email
@@ -53,8 +65,10 @@ if ($email !== null) {
 if ($avatar !== null) {
     // Image upload
     $target_dir = "images/userAvatar/";
-    $target_file = $target_dir . basename($avatar["name"]);
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    $fileExtension = pathinfo($avatar['name'], PATHINFO_EXTENSION);
+    $target_file = uniqid() . '-' . $_SESSION['USERNAME'] . '.' . $fileExtension;
+    $target_path = $target_dir . $target_file;
+    $imageFileType = strtolower(pathinfo($target_path,PATHINFO_EXTENSION));
 
     // Check if image file is a actual image or fake image
     $check = getimagesize($avatar["tmp_name"]);
@@ -62,7 +76,7 @@ if ($avatar !== null) {
         die("File is not an image.");
     }
 
-    if (move_uploaded_file($avatar["tmp_name"], $target_file)) {
+    if (move_uploaded_file($avatar["tmp_name"], $target_path)) {
         $sql = "UPDATE Member SET memberImageFileName = ? WHERE userName = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $target_file, $_SESSION['USERNAME']);
@@ -73,7 +87,8 @@ if ($avatar !== null) {
     }
 }
 
+
 // Redirect to edit profile page
-header("Location: ../editProfile.php");
+header("Location: editProfile.php");
 exit();
 ?>

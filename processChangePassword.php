@@ -38,20 +38,42 @@ $stmt->execute();
 $result = $stmt->get_result();
 $member = $result->fetch_assoc();
 
+$newPasswordHashed = password_hash($newPassword, PASSWORD_DEFAULT);
 // Verify old password
 if ($member && password_verify($oldPassword, $member['password'])) {
     // Update password
-    $newPasswordHashed = password_hash($newPassword, PASSWORD_DEFAULT);
+   
     $sql = "UPDATE Member SET password = ? WHERE userName = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $newPasswordHashed, $_SESSION['USERNAME']);
     $stmt->execute();
+
+    session_start();
+
+$_SESSION['password_success_message'] = '
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const successMessage = document.querySelector(".success-message");
+        const dismissBtn = document.querySelector("#dismissBtn");
+        dismissBtn.addEventListener("click", () => {
+            successMessage.style.display = "none";
+        });
+    });
+    </script>
+    
+    <div class="success-message card rounded border p-0 m-5">
+        <div class="card-title border p-3 bg-primary rounded">Success!</div>
+        <div class="card-text m-2 ml-4 p-2">The password was changed!</div>
+        <button class="btn btn-success m-4" id="dismissBtn">Dismiss</button>
+    </div>
+';
+
+
 } else {
     die('Old password is incorrect!');
 }
 
 // Redirect to change password page
-header("Location: ../changePassword.php");
-echo "<script>alert('Your password was changed.');</script>";
+header("Location: changePassword.php");
 exit();
 ?>

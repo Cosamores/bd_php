@@ -35,8 +35,10 @@ $member = $result->fetch_assoc();
 
 // Verify password
 if ($member && password_verify($password, $member['password'])) {
+    // Regenerate session ID to prevent session hijacking
+    session_regenerate_id();
+
     // Set session variables
-    $_SESSION['loggedin'] = true;
 
     $_SESSION['USERNAME'] = $member['userName'];
     $_SESSION['MEMBER_ID'] = $member['memberId'];
@@ -44,11 +46,36 @@ if ($member && password_verify($password, $member['password'])) {
     $_SESSION['FIRSTNAME'] = $member['firstName'];
     $_SESSION['LASTNAME'] = $member['lastName'];
     $_SESSION['EMAIL'] = $member['emailAddress'];
+    
+    $_SESSION['loggedin'] = true;
+   
+    $_SESSION['password_success_message'] = '
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const successMessage = document.querySelector(".success-message");
+        const dismissBtn = document.querySelector("#dismissBtn");
+        dismissBtn.addEventListener("click", () => {
+            successMessage.style.display = "none";
+        });
+    });
+    </script>
 
+    <div class="success-message card rounded border p-0 m-5">
+        <div class="card-title border p-3 bg-primary rounded">Success!</div>
+        <div class="card-text m-2 ml-4 p-2">Welcome to Questions!</div>
+        <button class="btn btn-success m-4" id="dismissBtn">Dismiss</button>
+    </div>
+    ';
     // Redirect to logged in page
-    header("Location: ../template.php");
-/*     exit();
- */} else {
-    die('Invalid username or password!');
+    header("Location: template.php");
+    exit();
+} else {
+    // Set error message
+    $_SESSION['login_error'] = 'Invalid username or password!';
+
+    // Redirect to login page
+    header("Location: memberLogin.php");
+    exit();
 }
+
 ?>

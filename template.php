@@ -2,10 +2,10 @@
 session_start();  
 if(isset($_SESSION['USERNAME'])) {
     // User is logged in
-    $pageContent = 'index.php'; // Replace with your logged-in page file
+    $pageContent = 'contentPages/contentHome.php';
 } else {
     // User is not logged in
-    $pageContent = 'template.php'; // Replace with your logged-out page file
+    $pageContent = 'contentPages/contentHome.php';
 }
 ?>
 

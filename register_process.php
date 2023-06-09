@@ -35,11 +35,13 @@ if (!empty($errors)) {
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 // Handle avatar upload
-$avatarFileName = '../images/userAvatar/defaultUser.png';
+$avatarFileName = 'images/userAvatar/defaultUser.png';
 if ($avatar['error'] == 0) {
     $tmpName = $avatar['tmp_name'];
-    $avatarFileName = '../images/userAvatar/' . uniqid() . '-' . $username;
-    move_uploaded_file($tmpName, $avatarFileName);
+    $fileExtension = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
+    $avatarFileName = uniqid() . '-' . $username . '.' . $fileExtension;
+    $avatarFilePath = 'images/userAvatar/' . $avatarFileName;
+    move_uploaded_file($tmpName, $avatarFilePath);
 }
 
 // Database credentials
@@ -81,14 +83,16 @@ $member_id = $conn->insert_id;
 
 // Set session variables
 $_SESSION['loggedin'] = true;
-$_SESSION['FIRSTNAME'] = $fname;
-$_SESSION['LASTNAME'] = $lname;
+$_SESSION['success_message'] = 'Registration successful!';
+
 $_SESSION['USERNAME'] = $username;
 $_SESSION['MEMBER_ID'] = $member_id;
 $_SESSION['MEMBER_IMAGE'] = $avatarFileName;
+$_SESSION['FIRSTNAME'] = $fname;
+$_SESSION['LASTNAME'] = $lname;
 $_SESSION['EMAIL'] = $email;
 
-// Redirect to login page
-header("Location: index.php");
+// Redirect to logged in page
+header("Location: template.php");
 exit();
 ?>
