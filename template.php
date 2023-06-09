@@ -1,9 +1,12 @@
-
-  <?php 
-
-     session_start();  
-     $_pageContent = 'template.php';
-
+<?php
+session_start();  
+if(isset($_SESSION['USERNAME'])) {
+    // User is logged in
+    $pageContent = 'index.php'; // Replace with your logged-in page file
+} else {
+    // User is not logged in
+    $pageContent = 'template.php'; // Replace with your logged-out page file
+}
 ?>
 
 <!doctype html>
@@ -68,7 +71,7 @@
         </div>
       </nav>
       <main class="p-2">
-
+      <?php include($pageContent); ?>
 
       </main>
       <footer class="bg-primary p-2 d-flex flex-column justify-content-end align-items-center">
