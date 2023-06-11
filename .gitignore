@@ -1,6 +1,8 @@
-myQuestionsView
-myQuestionsController
+myQuestionsView.php
+myQuestionsController.php
 processMyAnswers.php
-admin
+admin.php
 admin/
 myQuestions.php 
+myAnswers.php
+processMyAnswers.php
