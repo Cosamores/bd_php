@@ -1,6 +1,11 @@
+
 <?php
 session_start();  
-if(isset($_SESSION['USERNAME'])) {
+
+if (isset($_REQUEST['CategoryName']) || isset($_REQUEST['SubcategoryID'])) {
+    // A category or subcategory is selected
+    $pageContent = 'contentPages/contentQuestionsList.php';
+} else if (isset($_SESSION['USERNAME'])) {
     // User is logged in
     $pageContent = 'contentPages/contentHome.php';
 } else {
@@ -8,6 +13,7 @@ if(isset($_SESSION['USERNAME'])) {
     $pageContent = 'contentPages/contentHome.php';
 }
 ?>
+
 
 <!doctype html>
 <html lang="en">

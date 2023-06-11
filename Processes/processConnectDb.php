@@ -1,6 +1,14 @@
 <?php
+$servername = "localhost";
 $username = "root";
-$password = ""; //If using XAMPP, value is "". If using MAMP, then "root"
+$password = ""; 
 $database = "todf";
-$conn = mysqli_connect("localhost", $username, $password, $database);
- ?>
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $database);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+?>

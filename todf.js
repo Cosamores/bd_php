@@ -86,6 +86,22 @@ function createForumDropdown(parCategoryName, parArraySubCategories)
                ?createMenuItemWithSubmenu(parCategoryName, parArraySubCategories)
                :createMenuItemOther(parCategoryName);
 
+               // Add click event listener to category
+    categoryElement.addEventListener('click', function() {
+      window.location.href = 'questionsList.php?CategoryName=' + category;
+  });
+
+  // Add click event listener to each subcategory
+  subcategories.forEach(function(subcategory) {
+      var subcategoryElement = document.createElement('a');
+      subcategoryElement.className = 'dropdown-item';
+      subcategoryElement.href = '#';
+      subcategoryElement.textContent = subcategory.SubcategoryName;
+      subcategoryElement.addEventListener('click', function() {
+          window.location.href = 'questionsList.php?SubcategoryID=' + subcategory.SubcategoryID;
+      });
+      subcategoryListElement.appendChild(subcategoryElement);
+  });
   return thisCategory;
 }//createCategoryDropdownWithSubcategory()
 

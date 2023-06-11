@@ -33,6 +33,14 @@ $stmt->execute();
 $result = $stmt->get_result();
 $member = $result->fetch_assoc();
 
+/* // Fetch admin from the database
+$sql = "SELECT * FROM Employee WHERE role = 'admin'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$admin = $result->fetch_assoc(); */
+
 // Verify password
 if ($member && password_verify($password, $member['password'])) {
     // Regenerate session ID to prevent session hijacking
